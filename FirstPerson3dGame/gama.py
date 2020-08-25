@@ -14,6 +14,7 @@ while runGame:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			runGame = False
+			break
 	#background
 	sc.fill(BLACK)
 	pygame.draw.rect(sc, FLOOR, (0, HALF_HEIGHT, WIDHT, HALF_HEIGHT))
