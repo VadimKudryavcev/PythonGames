@@ -8,6 +8,7 @@ from raycasting import *
 sc = pygame.display.set_mode((WIDHT, HEIGHT))
 clock = pygame.time.Clock()
 player = Player()
+pygame.font.init()
 
 runGame = True
 while runGame:
@@ -35,6 +36,12 @@ while runGame:
 		                        (int((player.x + 30 * math.cos(player.angle)) * MAP_SCALE), 
 		                         int(HEIGHT - HEIGHT * MAP_SCALE + (player.y + 30 * math.sin(player.angle)) * MAP_SCALE))
 		              )
+
+	#fps_counter
+	fps_data = str(int(clock.get_fps()))
+	f1 = pygame.font.SysFont('System', 36)
+	fps_text = f1.render(fps_data, 0, WHITE)
+	sc.blit(fps_text, (WIDHT - 35, 5))
 
 	#player
 	player.movement()

@@ -15,18 +15,22 @@ class Player:
 		sin_angle = math.sin(self.angle)
 		cos_angle = math.cos(self.angle)
 		keys = pygame.key.get_pressed()
+		if keys[pygame.K_LSHIFT]:
+			shift = 2
+		else:
+			shift = 1
 		if keys[pygame.K_w]:
-			self.y += player_vel * sin_angle
-			self.x += player_vel * cos_angle
+			self.y += shift * player_vel * sin_angle
+			self.x += shift * player_vel * cos_angle
 		if keys[pygame.K_s]:
-			self.y -= player_vel * sin_angle
-			self.x -= player_vel * cos_angle
+			self.y -= shift * player_vel * sin_angle
+			self.x -= shift * player_vel * cos_angle
 		if keys[pygame.K_a]:
-			self.y -= player_vel * cos_angle
-			self.x += player_vel * sin_angle
+			self.y -= shift * player_vel * cos_angle
+			self.x += shift * player_vel * sin_angle
 		if keys[pygame.K_d]:
-			self.y += player_vel * cos_angle
-			self.x -= player_vel * sin_angle
+			self.y += shift * player_vel * cos_angle
+			self.x -= shift * player_vel * sin_angle
 		if keys[pygame.K_LEFT]:
 			self.angle -= player_turnSpeed
 		if keys[pygame.K_RIGHT]:
