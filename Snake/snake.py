@@ -1,5 +1,18 @@
 import pygame
 import random
+pygame.init()
+pygame.mixer.init()
+
+def saveScore(s):
+	f = open('score.txt', 'w')
+	f.write(str(s))
+	f.close()
+
+def openScore():
+	f = open('score.txt', 'r')
+	f.seek(0)
+	return f.read()
+	f.close()
 
 #main
 D_WIDHT = 600
@@ -9,7 +22,8 @@ SNAKE_SIZE = TILE - 2
 
 #player
 player_default_speed = TILE
-record = 0
+recstr = openScore()
+record = int(recstr)
 
 #color
 LGREEN = (100, 220, 100)
@@ -20,12 +34,23 @@ pygame.font.init()
 font1 = pygame.font.SysFont('Consolas', int(36 * TILE / 25))
 font2 = pygame.font.SysFont('Consolas', int(18 * TILE / 25))
 
+#music
+pygame.mixer.music.load('snake.wav')
+pygame.mixer.music.set_volume(1)
+pygame.mixer.music.play(loops=-1)
+
+#sound
+apple_sound = pygame.mixer.Sound('apple.wav')
+new_record_sound = pygame.mixer.Sound('newrecord.wav')
+
 sc = pygame.display.set_mode((D_WIDHT, D_HEIGHT))
 clock = pygame.time.Clock()
 startGame = True
 
 while startGame:
 	sc.fill(LGREEN)
+
+	pygame.mixer.music.set_volume(1)
 
 	runGame = True
 	x, y = random.randint(100, D_WIDHT-100), random.randint(100, D_HEIGHT-100)
@@ -35,6 +60,7 @@ while startGame:
 	snake_list = []
 	length_of_snake = 1
 	FPS = 2
+	sound_wasnt_played = True
 
 	while runGame:
 		for event in pygame.event.get():
@@ -84,11 +110,13 @@ while startGame:
 				if dot == snake_head:
 					runGame = False
 					record = length_of_snake - 1
+					saveScore(str(record))
 
 		#collision with wall
 		if (x < 0) or (x > D_WIDHT) or (y < 0) or (y > D_HEIGHT):
 			runGame = False
 			record = length_of_snake - 1
+			saveScore(str(record))
 
 		#draw apple
 		pygame.draw.rect(sc, CHARCH, ((apple_x // TILE * TILE + 5) , (apple_y // TILE * TILE  + 5), SNAKE_SIZE - 9, SNAKE_SIZE - 9), 2)
@@ -102,6 +130,7 @@ while startGame:
 			length_of_snake += 1
 			apple_x, apple_y = random.randint(0, D_WIDHT), random.randint(0, D_HEIGHT)
 			FPS += 0.2
+			apple_sound.play()
 
 		#score text
 		score_text = font2.render(str(length_of_snake - 1), 0, CHARCH)
@@ -118,8 +147,17 @@ while startGame:
 			info_text = font2.render('Press SPACE to speed up. Press Q to QUIT.', 0, CHARCH)
 			sc.blit(info_text, (20, D_HEIGHT - 20))
 
+		#sound		
+		if (speed_x == speed_y):
+			pygame.mixer.music.set_volume(1)
+		else:
+			pygame.mixer.music.set_volume(0)
+
+		if (length_of_snake - 1 > record) and sound_wasnt_played:
+			new_record_sound.play()
+			sound_wasnt_played = False
+
 		pygame.display.update()
 		clock.tick(K_FPS)
 	pygame.display.update()
-
 pygame.quit()
