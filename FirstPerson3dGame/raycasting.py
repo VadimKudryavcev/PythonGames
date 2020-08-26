@@ -13,7 +13,6 @@ def rayCasting(sc, player_pos, player_angle):
 		for j in range(SEE_DEPTH):
 			x = current_x + j * cos_a
 			y = current_y + j * sin_a
-			#pygame.draw.line(sc, GREEN, player_pos, (x, y))
 			if (x // TILE * TILE, y // TILE * TILE) in world_map:
 				j *= math.cos(player_angle - current_angle)
 				wall_height = COEF / j

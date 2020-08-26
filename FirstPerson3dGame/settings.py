@@ -5,6 +5,7 @@ HALF_WIDHT = WIDHT // 2
 HALF_HEIGHT = HEIGHT // 2
 FPS = 60
 TILE = 50
+MAP_SCALE = 0.2
 
 #ray_casting
 FOV = 1.05
