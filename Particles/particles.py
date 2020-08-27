@@ -9,11 +9,12 @@ WIDHT = 1000
 HEIGHT = 500
 FPS = 10
 gravity = 2
-size_change = 0.8
-SIZE_1 = 20
+size_change = 0.9
+SIZE_1 = 5
 SIZE_2 = 2
 SPEED_1 = 0
 SPEED_2 = 30
+MODE_CHANGE_TIME = 50
 
 #color
 BLACK = (0, 0, 0)
@@ -22,6 +23,12 @@ particles = []
 
 sc = pygame.display.set_mode((WIDHT, HEIGHT))
 clock = pygame.time.Clock()
+MODE = []
+MODE.append((gravity, SPEED_1, SPEED_2, SIZE_1, SIZE_2))
+MODE.append((1, 10, 0, 5, 2))
+MODE.append((0, 2, 15, 0, 10))
+MODE.append((2, 0, 4, 2, 2))
+NUM_EFFECTS = 4
 
 while True:
 	for event in pygame.event.get():
@@ -32,8 +39,25 @@ while True:
 	lenght_of_list = 0	
 	COUNT = 0
 	firstInit = True
+	COUNT_EFFECTS = 0
+	COUNT_MODE = 0
 
 	while True:
+		if (COUNT_MODE >= MODE_CHANGE_TIME):
+			MOD = MODE[COUNT_EFFECTS]
+			gravity = MOD[0]
+			SPEED_1 = MOD[1]
+			SPEED_2 = MOD[2]
+			SIZE_1 = MOD[3]
+			SIZE_2 = MOD[4]
+			COUNT_MODE = 0
+			COUNT_EFFECTS += 1
+			if COUNT_EFFECTS >= NUM_EFFECTS:
+				COUNT_EFFECTS = 0
+			COUNT_MODE = 0
+		COUNT_MODE += 1
+
+
 		sc.fill(BLACK)
 		x0 = random.randint(20, WIDHT - 20)
 		y0 = random.randint(20, HEIGHT - 20)
