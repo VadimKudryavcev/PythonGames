@@ -54,6 +54,8 @@ while startGame:
 
 	runGame = True
 	x, y = random.randint(100, D_WIDHT-100), random.randint(100, D_HEIGHT-100)
+	x = x // TILE * TILE + TILE // 2
+	y = y // TILE * TILE + TILE // 2
 	apple_x, apple_y = random.randint(0, D_WIDHT), random.randint(0, D_HEIGHT)
 	speed_y = 0
 	speed_x = 0
@@ -122,8 +124,15 @@ while startGame:
 		pygame.draw.rect(sc, CHARCH, ((apple_x // TILE * TILE + 5) , (apple_y // TILE * TILE  + 5), SNAKE_SIZE - 9, SNAKE_SIZE - 9), 2)
 
 		#draw snake
+		c = 0
+		a = 30
+		b = 30
 		for dot in snake_list:
-			pygame.draw.rect(sc, CHARCH, ((dot[0] // TILE * TILE + 1) , (dot[1] // TILE * TILE  + 1), SNAKE_SIZE, SNAKE_SIZE))
+			if a < 75:
+				a = 30 + c
+				b = 30 + int(c * 2.2)
+			color = (a, b, a)
+			pygame.draw.rect(sc, color, ((dot[0] // TILE * TILE + 1) , (dot[1] // TILE * TILE  + 1), SNAKE_SIZE, SNAKE_SIZE))
 		
 		#apple eating
 		if ((x // TILE * TILE == apple_x // TILE * TILE) and (y // TILE * TILE == apple_y // TILE * TILE)):
