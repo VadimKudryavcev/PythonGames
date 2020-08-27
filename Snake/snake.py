@@ -129,6 +129,9 @@ while startGame:
 		if ((x // TILE * TILE == apple_x // TILE * TILE) and (y // TILE * TILE == apple_y // TILE * TILE)):
 			length_of_snake += 1
 			apple_x, apple_y = random.randint(0, D_WIDHT), random.randint(0, D_HEIGHT)
+			for dot in snake_list:
+				if (apple_x // TILE * TILE == dot[0] // TILE * TILE) and (apple_y // TILE * TILE == dot[1] // TILE * TILE):
+					apple_x, apple_y = random.randint(0, D_WIDHT), random.randint(0, D_HEIGHT)
 			FPS += 0.2
 			apple_sound.play()
 
