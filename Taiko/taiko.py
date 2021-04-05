@@ -11,6 +11,7 @@ clock = pygame.time.Clock()
 pygame.font.init()
 font1 = pygame.font.SysFont('Consolas', int(24))
 pygame.mixer.init()
+drawing = Drawing(sc)
 
 kick_sound = pygame.mixer.Sound('kick.wav')
 kick2_sound = pygame.mixer.Sound('kick2.wav')
@@ -62,13 +63,12 @@ while startGame:
 		music_playing = True
 
 	#drawing
-	drawingBackground(sc)
-	drawingText(sc, font1, score, combo_num)
+	drawing.drawingBackground()
+	drawing.drawingText(font1, score, combo_num)
 	for i in range(0, circle_num):
 		current_circle = circles[i]
-
-		drawingCircle(sc, current_circle.pos, current_circle.awake_time, time.time() * 10 - time0, current_circle.state, font1, current_circle.num)
-		drawingPoint(sc, pos_for_point, point_for_drawing, font1)
+		drawing.drawingCircle(current_circle.pos, current_circle.awake_time, time.time() * 10 - time0, current_circle.state, font1, current_circle.num)
+		drawing.drawingPoint(pos_for_point, point_for_drawing, font1)
 
 	#mouse position
 	pos = pygame.mouse.get_pos()
